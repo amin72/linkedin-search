@@ -30,7 +30,7 @@ def parse_json_field(field):
             if isinstance(result, list):
                 return [item for item in result if item and isinstance(item, str) and item.strip()]
             return result
-        except:
+        except (json.JSONDecodeError, ValueError):
             try:
                 result = ast.literal_eval(field)
                 if isinstance(result, dict):
@@ -38,7 +38,7 @@ def parse_json_field(field):
                 if isinstance(result, list):
                     return [item for item in result if item and isinstance(item, str) and item.strip()]
                 return result
-            except:
+            except (ValueError, SyntaxError):
                 if field.strip():
                     return [field.strip()]
                 return []
@@ -84,9 +84,8 @@ def extract_location(profile: dict) -> str | None:
     region = profile.get("location_region")
     country = profile.get("location_country")
 
-    if locality and isinstance(locality, str):
-        if re.search(r"\d{4}-\d{2}-\d{2}", locality) or re.match(r"^[\d\.]+$", locality.strip()):
-            locality = None
+    if locality and isinstance(locality, str) and (re.search(r"\d{4}-\d{2}-\d{2}", locality) or re.match(r"^[\d\.]+$", locality.strip())):
+        locality = None
 
     if locality and isinstance(locality, str):
         if locality.startswith(("[", "{")):
@@ -157,7 +156,7 @@ def clean_summary(value):
                     if not cleaned_items:
                         return None
                     value = " ".join(cleaned_items)
-            except:
+            except (ValueError, SyntaxError):
                 pass
 
     if isinstance(value, list):
@@ -315,7 +314,7 @@ def load_profiles(csv_path: str) -> list[dict[str, Any]]:
                     continue
 
             profiles.append(profile)
-        except Exception:
+        except (ValueError, KeyError, TypeError, AttributeError):
             continue
 
     return profiles
