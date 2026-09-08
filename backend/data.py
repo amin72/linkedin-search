@@ -10,7 +10,7 @@ ALL_TITLES = None
 def get_profiles():
     global PROFILES
     if PROFILES is None:
-        csv_path = os.path.join(os.path.dirname(__file__), 'dataset.csv')
+        csv_path = os.path.join(os.path.dirname(__file__), "dataset.csv")
         PROFILES = load_profiles(csv_path)
     return PROFILES
 

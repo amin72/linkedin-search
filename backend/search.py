@@ -17,15 +17,15 @@ def search_profiles(
         filtered = []
         for p in results:
             search_fields = [
-                p.get('full_name', ''),
-                p.get('job_title', ''),
-                p.get('job_company_name', ''),
-                p.get('summary', ''),
-                p.get('industry', ''),
+                p.get("full_name", ""),
+                p.get("job_title", ""),
+                p.get("job_company_name", ""),
+                p.get("summary", ""),
+                p.get("industry", ""),
             ]
 
-            if p.get('skills') and isinstance(p['skills'], list):
-                search_fields.extend([str(s).lower() for s in p['skills'] if s])
+            if p.get("skills") and isinstance(p["skills"], list):
+                search_fields.extend([str(s).lower() for s in p["skills"] if s])
 
             matches = False
             for field in search_fields:
@@ -42,8 +42,8 @@ def search_profiles(
         skill_lower = skill.strip().lower()
         filtered = []
         for p in results:
-            if p.get('skills') and isinstance(p['skills'], list):
-                for s in p['skills']:
+            if p.get("skills") and isinstance(p["skills"], list):
+                for s in p["skills"]:
                     if s and skill_lower in str(s).lower():
                         filtered.append(p)
                         break
@@ -54,7 +54,7 @@ def search_profiles(
         title_lower = title.strip().lower()
         filtered = []
         for p in results:
-            if p.get('job_title') and title_lower in str(p['job_title']).lower():
+            if p.get("job_title") and title_lower in str(p["job_title"]).lower():
                 filtered.append(p)
         results = filtered
 
@@ -70,9 +70,9 @@ def search_profiles(
     profile_responses = [ProfileResponse(**p) for p in paginated_results]
 
     return {
-        'total': total,
-        'page': page,
-        'page_size': page_size,
-        'total_pages': total_pages,
-        'results': profile_responses
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": total_pages,
+        "results": profile_responses
     }

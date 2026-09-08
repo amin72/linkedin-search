@@ -21,9 +21,9 @@ async def search(
 ):
     profiles = get_profiles()
     result = search_profiles(profiles, q, skill, title, page, page_size)
-    result['filters'] = {
-        'skills': get_skills(),
-        'titles': get_titles()
+    result["filters"] = {
+        "skills": get_skills(),
+        "titles": get_titles()
     }
     return result
 
@@ -31,8 +31,8 @@ async def search(
 @router.get("/api/filters")
 async def get_filters():
     return {
-        'skills': get_skills(),
-        'titles': get_titles()
+        "skills": get_skills(),
+        "titles": get_titles()
     }
 
 
@@ -40,6 +40,6 @@ async def get_filters():
 async def get_all_profiles():
     profiles = get_profiles()
     return {
-        'total': len(profiles),
-        'profiles': profiles
+        "total": len(profiles),
+        "profiles": profiles
     }

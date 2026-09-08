@@ -65,7 +65,7 @@ def is_location(value: str) -> bool:
 
 def extract_location(profile: dict) -> str | None:
     """Extract clean location from profile"""
-    location = profile.get('location_name')
+    location = profile.get("location_name")
 
     # Skip if location looks like a date or number
     if location and isinstance(location, str):
@@ -93,9 +93,9 @@ def extract_location(profile: dict) -> str | None:
             pass
         elif locality.strip():
             parts = [locality.strip()]
-            if region and isinstance(region, str) and not region.startswith('[') and region.strip():
+            if region and isinstance(region, str) and not region.startswith("[") and region.strip():
                 parts.append(region.strip())
-            if country and isinstance(country, str) and not country.startswith('[') and country.strip():
+            if country and isinstance(country, str) and not country.startswith("[") and country.strip():
                 parts.append(country.strip())
             result = ", ".join(parts)
             if re.search(r"\d{4}-\d{2}-\d{2}", result):
@@ -106,8 +106,8 @@ def extract_location(profile: dict) -> str | None:
         parts = [region.strip()]
         if country and isinstance(country, str) and not country.startswith("[") and country.strip():
             parts.append(country.strip())
-        result = ', '.join(parts)
-        if re.search(r'\d{4}-\d{2}-\d{2}', result):
+        result = ", ".join(parts)
+        if re.search(r"\d{4}-\d{2}-\d{2}", result):
             return None
         return result
 
@@ -180,7 +180,7 @@ def clean_summary(value):
         cleaned = re.sub(phone_pattern, "", value)
         cleaned = re.sub(r"\[\'\+?\d{10,15}\'(?:,\s*\'\+?\d{10,15}\')*\]", "", cleaned)
         cleaned = re.sub(r"\[\s*\]", "", cleaned)
-        cleaned = re.sub(r'\s+', " ", cleaned).strip()
+        cleaned = re.sub(r"\s+", " ", cleaned).strip()
         cleaned = cleaned.strip(",;:. ")
         if not cleaned or len(cleaned) < 15 or len(cleaned.split()) < 3:
             return None
@@ -339,7 +339,7 @@ def get_all_titles(profiles: list[dict]) -> list[str]:
     """Extract all unique job titles from profiles"""
     titles_set = set()
     for p in profiles:
-        title = p.get('job_title')
+        title = p.get("job_title")
         if title and isinstance(title, str):
             title_clean = title.strip()
             if title_clean and len(title_clean) > 2:
