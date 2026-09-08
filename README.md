@@ -1,6 +1,6 @@
 # LinkedIn Profile Search Application
 
-A production-grade LinkedIn profile search engine built with FastAPI and vanilla JavaScript. Search through 300+ LinkedIn profiles with keyword search, skill filters, title filters, and pagination.
+A production-grade LinkedIn profile search engine built with FastAPI and vanilla JavaScript. Search through lots of LinkedIn profiles with keyword search, skill filters, title filters, and pagination.
 
 ## Features
 
@@ -72,6 +72,14 @@ Get available skills and job titles for filtering.
 
 ### GET /api/profiles
 Get all profiles (debugging endpoint).
+
+## API Documentation
+
+FastAPI automatically generates interactive API documentation. Once the backend is running, access:
+
+- **Swagger UI:** http://localhost:8000/docs - Interactive documentation with try-it-out functionality
+- **ReDoc:** http://localhost:8000/redoc - Alternative clean documentation layout
+- **OpenAPI JSON:** http://localhost:8000/openapi.json - Raw OpenAPI schema for integration with other tools
 
 ## Development
 
