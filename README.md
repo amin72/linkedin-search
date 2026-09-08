@@ -1,7 +1,6 @@
-```markdown
 # LinkedIn Profile Search Application
 
-A production-grade LinkedIn profile search engine built with FastAPI and vanilla JavaScript.
+A production-grade LinkedIn profile search engine built with FastAPI and vanilla JavaScript. Search through 300+ LinkedIn profiles with keyword search, skill filters, title filters, and pagination.
 
 ## Features
 
@@ -13,7 +12,7 @@ A production-grade LinkedIn profile search engine built with FastAPI and vanilla
 
 ## Tech Stack
 
-**Backend:** FastAPI, Pandas, Pydantic, Python 3.10+
+**Backend:** FastAPI, Pandas, Pydantic, Python 3.12+
 
 **Frontend:** Vanilla JavaScript, jQuery, Pico CSS
 
@@ -43,7 +42,7 @@ frontend/
 cd backend
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-uv pip install -r requirements.txt
+uv sync
 uvicorn app:app --reload --port 8000
 ```
 
@@ -69,7 +68,7 @@ Search and filter LinkedIn profiles.
 - `page_size` - Results per page (default: 10, max: 100)
 
 ### GET /api/filters
-Get available skills and job titles.
+Get available skills and job titles for filtering.
 
 ### GET /api/profiles
 Get all profiles (debugging endpoint).
@@ -84,4 +83,3 @@ ruff format backend/
 ## License
 
 MIT
-```
