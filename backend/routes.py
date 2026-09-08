@@ -1,5 +1,6 @@
-from data import get_profiles, get_skills, get_titles
 from fastapi import APIRouter, Query
+
+from data import get_profiles, get_skills, get_titles
 from models import SearchResponse
 from search import search_profiles
 
