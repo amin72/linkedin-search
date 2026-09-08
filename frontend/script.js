@@ -186,7 +186,7 @@ function renderPagination(currentPage, totalPages) {
     let endPage = Math.min(totalPages, currentPage + 2);
 
     for (var i = startPage; i <= endPage; i++) {
-        html += '<button class="' + (i === currentPage ? 'active' : '') + '" data-page="' + i + '">' + i + '</button>';
+        html += '<button class="' + (i === currentPage ? 'active' : '') + '" data-page="' + i + '" ' + (i === currentPage ? 'disabled' : '') + '>' + i + '</button>';
     }
 
     if (currentPage < totalPages - 2) {
