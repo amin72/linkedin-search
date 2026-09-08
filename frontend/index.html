@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile Search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <div class="hero">
+            <h1>🔍 LinkedIn Profile Search</h1>
+            <p class="subtitle">Search through 300+ LinkedIn profiles</p>
+        </div>
+
+        <section>
+            <form id="searchForm">
+                <div class="search-row">
+                    <input type="text" id="searchInput" placeholder="Search by name, skill, company, title...">
+                </div>
+
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label for="skillFilter">Skill</label>
+                        <select id="skillFilter">
+                            <option value="">All Skills</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="titleFilter">Job Title</label>
+                        <select id="titleFilter">
+                            <option value="">All Titles</option>
+                        </select>
+                    </div>
+                    <button type="button" id="clearFilters" class="btn-clear">Clear Filters</button>
+                </div>
+
+                <div class="search-button-row">
+                    <button type="submit" class="btn-search">🔍 Search</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="resultsSection">
+            <div id="resultsMeta">
+                <span id="resultCount">0 profiles found</span>
+                <span id="loadingIndicator" style="display:none;">Loading...</span>
+            </div>
+            <div id="resultsContainer"></div>
+            <div id="pagination"></div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
