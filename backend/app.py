@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 from data_loader import get_all_skills, get_all_titles, load_profiles
 from fastapi import FastAPI, Query
