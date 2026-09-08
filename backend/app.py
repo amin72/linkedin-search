@@ -5,7 +5,7 @@ from routes import router
 app = FastAPI(
     title="LinkedIn Profile Search API",
     description="Search and filter LinkedIn profiles",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 app.add_middleware(

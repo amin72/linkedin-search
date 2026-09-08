@@ -15,20 +15,28 @@ def parse_json_field(field):
         if isinstance(field, dict):
             return []
         if isinstance(field, list):
-            return [item for item in field if item and isinstance(item, str) and item.strip()]
+            return [
+                item
+                for item in field
+                if item and isinstance(item, str) and item.strip()
+            ]
         return field
 
     if isinstance(field, str):
         if not field or not field.strip():
             return []
-        if field == "[]" or field == "['']" or field == "[\"\"]":
+        if field == "[]" or field == "['']" or field == '[""]':
             return []
         try:
             result = json.loads(field)
             if isinstance(result, dict):
                 return []
             if isinstance(result, list):
-                return [item for item in result if item and isinstance(item, str) and item.strip()]
+                return [
+                    item
+                    for item in result
+                    if item and isinstance(item, str) and item.strip()
+                ]
             return result
         except (json.JSONDecodeError, ValueError):
             try:
@@ -36,7 +44,11 @@ def parse_json_field(field):
                 if isinstance(result, dict):
                     return []
                 if isinstance(result, list):
-                    return [item for item in result if item and isinstance(item, str) and item.strip()]
+                    return [
+                        item
+                        for item in result
+                        if item and isinstance(item, str) and item.strip()
+                    ]
                 return result
             except (ValueError, SyntaxError):
                 if field.strip():
@@ -49,10 +61,25 @@ def parse_json_field(field):
 def is_location(value: str) -> bool:
     """Check if a string looks like a location (city, state, country)"""
     location_indicators = [
-        "united states", "united kingdom", "canada", "australia",
-        "texas", "california", "new york", "florida", "ohio",
-        "street", "avenue", "boulevard", "road", "drive",
-        "city", "town", "village", "county", "state"
+        "united states",
+        "united kingdom",
+        "canada",
+        "australia",
+        "texas",
+        "california",
+        "new york",
+        "florida",
+        "ohio",
+        "street",
+        "avenue",
+        "boulevard",
+        "road",
+        "drive",
+        "city",
+        "town",
+        "village",
+        "county",
+        "state",
     ]
 
     value_lower = value.lower()
@@ -84,7 +111,14 @@ def extract_location(profile: dict) -> str | None:
     region = profile.get("location_region")
     country = profile.get("location_country")
 
-    if locality and isinstance(locality, str) and (re.search(r"\d{4}-\d{2}-\d{2}", locality) or re.match(r"^[\d\.]+$", locality.strip())):
+    if (
+        locality
+        and isinstance(locality, str)
+        and (
+            re.search(r"\d{4}-\d{2}-\d{2}", locality)
+            or re.match(r"^[\d\.]+$", locality.strip())
+        )
+    ):
         locality = None
 
     if locality and isinstance(locality, str):
@@ -92,25 +126,50 @@ def extract_location(profile: dict) -> str | None:
             pass
         elif locality.strip():
             parts = [locality.strip()]
-            if region and isinstance(region, str) and not region.startswith("[") and region.strip():
+            if (
+                region
+                and isinstance(region, str)
+                and not region.startswith("[")
+                and region.strip()
+            ):
                 parts.append(region.strip())
-            if country and isinstance(country, str) and not country.startswith("[") and country.strip():
+            if (
+                country
+                and isinstance(country, str)
+                and not country.startswith("[")
+                and country.strip()
+            ):
                 parts.append(country.strip())
             result = ", ".join(parts)
             if re.search(r"\d{4}-\d{2}-\d{2}", result):
                 return None
             return result
 
-    if region and isinstance(region, str) and not region.startswith("[") and region.strip():
+    if (
+        region
+        and isinstance(region, str)
+        and not region.startswith("[")
+        and region.strip()
+    ):
         parts = [region.strip()]
-        if country and isinstance(country, str) and not country.startswith("[") and country.strip():
+        if (
+            country
+            and isinstance(country, str)
+            and not country.startswith("[")
+            and country.strip()
+        ):
             parts.append(country.strip())
         result = ", ".join(parts)
         if re.search(r"\d{4}-\d{2}-\d{2}", result):
             return None
         return result
 
-    if country and isinstance(country, str) and not country.startswith("[") and country.strip():
+    if (
+        country
+        and isinstance(country, str)
+        and not country.startswith("[")
+        and country.strip()
+    ):
         return country.strip()
 
     return None
@@ -126,10 +185,24 @@ def extract_title(value):
         if not value:
             return None
         malformed_patterns = [
-            "Specialties:", "Overseas assignments", "H:\\", ".csv(",
-            "part-", "New folder", "BreachedData", "LinkedIn-",
-            "[", "{", "'company':", "\"company\":", "['", "[\"",
-            "\\Users\\", "C:\\", "D:\\", "/home/",
+            "Specialties:",
+            "Overseas assignments",
+            "H:\\",
+            ".csv(",
+            "part-",
+            "New folder",
+            "BreachedData",
+            "LinkedIn-",
+            "[",
+            "{",
+            "'company':",
+            '"company":',
+            "['",
+            '["',
+            "\\Users\\",
+            "C:\\",
+            "D:\\",
+            "/home/",
         ]
         for pattern in malformed_patterns:
             if pattern in value:
@@ -145,14 +218,18 @@ def clean_summary(value):
         return None
 
     if isinstance(value, str):
-        if value == "[]" or value == "['']" or value == "[\"\"]":
+        if value == "[]" or value == "['']" or value == '[""]':
             return None
 
         if value.startswith("[") and value.endswith("]"):
             try:
                 parsed = ast.literal_eval(value)
                 if isinstance(parsed, list):
-                    cleaned_items = [str(item).strip() for item in parsed if item and str(item).strip()]
+                    cleaned_items = [
+                        str(item).strip()
+                        for item in parsed
+                        if item and str(item).strip()
+                    ]
                     if not cleaned_items:
                         return None
                     value = " ".join(cleaned_items)
@@ -160,7 +237,9 @@ def clean_summary(value):
                 pass
 
     if isinstance(value, list):
-        cleaned_items = [str(item).strip() for item in value if item and str(item).strip()]
+        cleaned_items = [
+            str(item).strip() for item in value if item and str(item).strip()
+        ]
         if not cleaned_items:
             return None
         value = " ".join(cleaned_items)
@@ -210,10 +289,25 @@ def is_empty_summary(value) -> bool:
 def is_malformed_row(profile: dict) -> bool:
     """Check if a row contains malformed data"""
     malformed_patterns = [
-        "Specialties:", "Overseas assignments", "H:\\", ".csv(",
-        "part-", "New folder", "BreachedData", "LinkedIn-",
-        "\\Users\\", "C:\\", "D:\\", "E:\\", "/home/", "/Users/",
-        ".txt", ".csv", ".json", "H:/", "C:/",
+        "Specialties:",
+        "Overseas assignments",
+        "H:\\",
+        ".csv(",
+        "part-",
+        "New folder",
+        "BreachedData",
+        "LinkedIn-",
+        "\\Users\\",
+        "C:\\",
+        "D:\\",
+        "E:\\",
+        "/home/",
+        "/Users/",
+        ".txt",
+        ".csv",
+        ".json",
+        "H:/",
+        "C:/",
     ]
 
     for key, value in profile.items():
@@ -237,11 +331,7 @@ def is_malformed_row(profile: dict) -> bool:
 def load_profiles(csv_path: str) -> list[dict[str, Any]]:
     """Load and parse LinkedIn profiles from CSV"""
     df = pd.read_csv(
-        csv_path,
-        dtype=str,
-        keep_default_na=False,
-        engine="python",
-        on_bad_lines="skip"
+        csv_path, dtype=str, keep_default_na=False, engine="python", on_bad_lines="skip"
     )
 
     profiles = []
@@ -251,15 +341,26 @@ def load_profiles(csv_path: str) -> list[dict[str, Any]]:
 
             full_name = profile.get("full_name", "")
             if isinstance(full_name, str):
-                if "H:\\" in full_name or "Specialties:" in full_name or "Overseas assignments" in full_name:
+                if (
+                    "H:\\" in full_name
+                    or "Specialties:" in full_name
+                    or "Overseas assignments" in full_name
+                ):
                     continue
                 if ":" in full_name and ("\\" in full_name or "/" in full_name):
                     continue
 
             nested_fields = [
-                "skills", "experience", "education", "profiles",
-                "certifications", "languages", "location_names",
-                "regions", "countries", "street_addresses",
+                "skills",
+                "experience",
+                "education",
+                "profiles",
+                "certifications",
+                "languages",
+                "location_names",
+                "regions",
+                "countries",
+                "street_addresses",
             ]
 
             for field in nested_fields:
@@ -274,7 +375,12 @@ def load_profiles(csv_path: str) -> list[dict[str, Any]]:
                 profile["profiles"] = []
 
             for key, value in profile.items():
-                if value == "" or value == "[]" or isinstance(value, float) and pd.isna(value):
+                if (
+                    value == ""
+                    or value == "[]"
+                    or isinstance(value, float)
+                    and pd.isna(value)
+                ):
                     profile[key] = None
 
             if "skills" in profile:
@@ -283,7 +389,9 @@ def load_profiles(csv_path: str) -> list[dict[str, Any]]:
                     cleaned = []
                     for s in raw_skills:
                         if s and isinstance(s, str) and s.strip():
-                            if s.strip().startswith("+") and any(c.isdigit() for c in s.strip()):
+                            if s.strip().startswith("+") and any(
+                                c.isdigit() for c in s.strip()
+                            ):
                                 continue
                             if not is_location(s.strip()):
                                 cleaned.append(s.strip())

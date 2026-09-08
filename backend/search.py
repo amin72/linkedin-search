@@ -1,11 +1,10 @@
-
 def search_profiles(
     profiles: list[dict],
     q: str | None = None,
     skill: str | None = None,
     title: str | None = None,
     page: int = 1,
-    page_size: int = 10
+    page_size: int = 10,
 ) -> dict:
     """Search and filter profiles with pagination"""
 
@@ -67,6 +66,7 @@ def search_profiles(
 
     # Convert to ProfileResponse objects
     from models import ProfileResponse
+
     profile_responses = [ProfileResponse(**p) for p in paginated_results]
 
     return {
@@ -74,5 +74,5 @@ def search_profiles(
         "page": page,
         "page_size": page_size,
         "total_pages": total_pages,
-        "results": profile_responses
+        "results": profile_responses,
     }

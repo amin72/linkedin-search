@@ -17,29 +17,20 @@ async def search(
     skill: str | None = Query(None, description="Filter by skill"),
     title: str | None = Query(None, description="Filter by job title"),
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(10, ge=1, le=100, description="Results per page")
+    page_size: int = Query(10, ge=1, le=100, description="Results per page"),
 ):
     profiles = get_profiles()
     result = search_profiles(profiles, q, skill, title, page, page_size)
-    result["filters"] = {
-        "skills": get_skills(),
-        "titles": get_titles()
-    }
+    result["filters"] = {"skills": get_skills(), "titles": get_titles()}
     return result
 
 
 @router.get("/api/filters")
 async def get_filters():
-    return {
-        "skills": get_skills(),
-        "titles": get_titles()
-    }
+    return {"skills": get_skills(), "titles": get_titles()}
 
 
 @router.get("/api/profiles")
 async def get_all_profiles():
     profiles = get_profiles()
-    return {
-        "total": len(profiles),
-        "profiles": profiles
-    }
+    return {"total": len(profiles), "profiles": profiles}
